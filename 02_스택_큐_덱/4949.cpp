@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool StackIn(stack<char>& s, string str) {
+bool stackIn(stack<char>& s, string str) {
 	for (int i = 0; i < str.length(); i++) {
 		if (str[i] == '[' || str[i] == '(') {
 			s.push(str[i]);
@@ -42,19 +42,19 @@ int main() {
 
 	while (true) {
 		//입력
-		cin.ignore();
 		getline(cin, str, '.');
+		cin.ignore();
 				
 		if (str == "") {
 			break;
 		}
 
 		//출력
-		if (StackIn(s, str) && s.empty()) {
-			cout << "yes" << endl;
+		if (stackIn(s, str) && s.empty()) {
+			cout << "yes" << "\n";
 		}
 		else {
-			cout << "no" << endl;
+			cout << "no" << "\n";
 		}
 
 		//스택 초기화
