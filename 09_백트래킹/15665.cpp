@@ -13,8 +13,8 @@ void backtrack(int index, int m, set<int> s, vector<int> ans) {
 		cout << "\n";
 		return;
 	}
-	for (set<int>::iterator iter = s.begin(); iter != s.end(); iter++) {
-		ans[index] = *iter;
+	for (auto element : s) {
+		ans[index] = element;
 		backtrack(index + 1, m, s, ans);
 	}
 }
