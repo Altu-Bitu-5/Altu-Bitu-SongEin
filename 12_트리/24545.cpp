@@ -23,9 +23,9 @@ void diameter(int point, int prev, int dist, int& cur_dist, int& node) {
 }
 
 bool routeTrace(int point, int node_end, int prev, int dist, vector<int>& route) {
-	route[dist] = point;
 
 	if (point == node_end) {
+		route[dist] = point;
 		return true;
 	}
 	for (int i = 0; i < tree[point].size(); i++) {
@@ -33,23 +33,23 @@ bool routeTrace(int point, int node_end, int prev, int dist, vector<int>& route)
 			continue;
 		}
 		if (routeTrace(tree[point][i], node_end, point, dist + 1, route)) {
+			route[dist] = point;
 			return true;
 		}
 	}
 	return false;
 }
 
-int branchSearch(int point) {
-	int max_depth = 0;
+void branchSearch(int point, int dist, int &side_len) {
 	visited[point] = true;
 
 	for (int i = 0; i < tree[point].size(); i++) {
-		if (visited[tree[point][i]]) {
-			continue;
+		if (!visited[tree[point][i]]) {
+			branchSearch(tree[point][i], dist + 1, side_len);
 		}
-		max_depth = max(max_depth, branchSearch(tree[point][i]));
 	}
-	return max_depth + 1;
+
+	side_len = max(side_len, dist);
 }
 
 int main() {
@@ -92,7 +92,7 @@ int main() {
 	}
 	
 	for (i = 1; i < diameter_len; i++) {
-		side_len = max(side_len, branchSearch(route[i]));
+		branchSearch(route[i], 1, side_len);
 	}
 
 	if (side_len < 2) { // Y트리를 만들 수 없는 경우 2: Y트리를 만들기 위해서는 지름까지의 루트에서 뻗어나오는 최소 길이가 2이상이어야 함.
